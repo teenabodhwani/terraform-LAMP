@@ -1,10 +1,10 @@
 #creates VPC, one public subnet, two private subnets, one EC2 instance and one MYSQL RDS instance
 #declare variables
 variable "access_key" {
-default = "<your_access_key>"
+default = "AKIARESMOZPXSQYSRI6I"
 }
 variable "secret_key" {
-default = "<your_secret_key>"
+default = "j0ObY1nsu4ttabpoWoxeBcLLm7CzHL/lq/rJVnLb"G2+7Z"
 }
 variable "region" {
 default = "ap-south-1"
@@ -199,7 +199,7 @@ security_group_id = "${aws_security_group.db_security_group.id}"
 resource "aws_instance" "my_web_instance" {
 ami = "${lookup(var.images,var.region)}"
 instance_type = "t2.micro"
-key_name = "<your_private_key>" #make sure you have your_private_ket.pem file
+key_name = "lampKP" #make sure you have your_private_ket.pem file
 vpc_security_group_ids = ["${aws_security_group.web_security_group.id}"]
 subnet_id = "${aws_subnet.myvpc_public_subnet.id}"
 tags = {
@@ -229,7 +229,7 @@ user = "ec2-user"
 password = ""
 #copy <your_private_key>.pem to your local instance home directory
 #restrict permission: chmod 400 <your_private_key>.pem
-private_key = "${file("/home/ec2-user/<your_private_key>.pem")}"
+private_key = "lampKP.pem"
 }
 }
 #create aws rds subnet groups
