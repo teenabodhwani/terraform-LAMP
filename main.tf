@@ -1,10 +1,10 @@
 #creates VPC, one public subnet, two private subnets, one EC2 instance and one MYSQL RDS instance
 #declare variables
 variable "access_key" {
-default = "AKIARESMOZPXSQYSRI6I"
+  default = "AKIARESMOZPXSQYSRI6I"
 }
 variable "secret_key" {
-default = "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"G2+7Z"
+  default = "j0ObY1nsu4ttabpoWoxeBcLLm7CzHL/lq/rJVnLbG2+7Z"
 }
 variable "region" {
 default = "ap-south-1"
@@ -59,7 +59,7 @@ data "aws_availability_zones" "availability_zones" {}
 resource "aws_vpc" "myvpc" {
 cidr_block = "${var.vpc_cidr}"
 enable_dns_hostnames = true
-tags {
+tags = {
 Name = "myvpc"
 }
 }
@@ -69,32 +69,32 @@ vpc_id = "${aws_vpc.myvpc.id}"
 cidr_block = "${var.subnet_one_cidr}"
 availability_zone = "${data.aws_availability_zones.availability_zones.names[0]}"
 map_public_ip_on_launch = true
-tags {
-   Name = "myvpc_public_subnet"
-  }
+tags = {
+Name = "myvpc_public_subnet"
+}
 }
 #create private subnet one
 resource "aws_subnet" "myvpc_private_subnet_one" {
 vpc_id = "${aws_vpc.myvpc.id}"
 cidr_block = "${element(var.subnet_two_cidr, 0)}"
 availability_zone = "${data.aws_availability_zones.availability_zones.names[0]}"
-tags {
-   Name = "myvpc_private_subnet_one"
-  }
+tags = {
+Name = "myvpc_private_subnet_one"
+}
 }
 #create private subnet two
 resource "aws_subnet" "myvpc_private_subnet_two" {
 vpc_id = "${aws_vpc.myvpc.id}"
 cidr_block = "${element(var.subnet_two_cidr, 1)}"
 availability_zone = "${data.aws_availability_zones.availability_zones.names[1]}"
-tags {
-   Name = "myvpc_private_subnet_two"
-  }
+tags = {
+Name = "myvpc_private_subnet_two"
+}
 }
 #create internet gateway
 resource "aws_internet_gateway" "myvpc_internet_gateway" {
 vpc_id = "${aws_vpc.myvpc.id}"
-tags {
+tags = {
 Name = "myvpc_internet_gateway"
 }
 }
@@ -105,14 +105,14 @@ route {
 cidr_block = "${var.route_table_cidr}"
 gateway_id = "${aws_internet_gateway.myvpc_internet_gateway.id}"
 }
-tags {
+tags = {
 Name = "myvpc_public_subnet_route_table"
 }
 }
 #create private subnet route table
 resource "aws_route_table" "myvpc_private_subnet_route_table" {
 vpc_id = "${aws_vpc.myvpc.id}"
-tags {
+tags = {
 Name = "myvpc_private_subnet_route_table"
 }
 }
@@ -142,7 +142,7 @@ resource "aws_security_group" "web_security_group" {
 name = "web_security_group"
 description = "Allow all inbound traffic"
 vpc_id = "${aws_vpc.myvpc.id}"
-tags {
+tags = {
 Name = "myvpc_web_security_group"
 }
 }
@@ -171,7 +171,7 @@ resource "aws_security_group" "db_security_group" {
 name = "db_security_group"
 description = "Allow all inbound traffic"
 vpc_id = "${aws_vpc.myvpc.id}"
-tags {
+tags = {
 Name = "myvpc_db_security_group"
 }
 }
