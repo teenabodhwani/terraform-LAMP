@@ -28,7 +28,7 @@ variable "db_ports" {
 default = ["22", "3306"]
 }
 variable "images" {
-type = "map"
+type = map
 default = {
 "us-east-1" = "ami-0937dcc711d38ef3f"
 "us-east-2" = "ami-04328208f4f0cf1fe"
